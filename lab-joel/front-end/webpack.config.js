@@ -18,6 +18,7 @@ let plugins = [
     __API_URL__: JSON.stringify(process.env.API_URL),
   }),
 ];
+console.log('PROCESS ENV API URL', process.env.API_URL);
 
 if(production) {
   plugins = plugins.concat([new CleanPlugin(), new UglifyPlugin()]);

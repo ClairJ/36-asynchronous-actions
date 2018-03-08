@@ -1,8 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import AlbumForm from '../album/album-form'
 import {
   albumFetchRequest,
-  albumCreateRequest} from '../../actions/album-actions';
+  albumCreateRequest,
+  albumUpdateRequest,
+  albumDeleteRequest} from '../../actions/album-actions';
 
 class Dashboard extends React.Component {
   componentWillMount() {
@@ -10,15 +13,21 @@ class Dashboard extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <div className="dashboard-container">
         <h1>Hello world - music things</h1>
 
+        <AlbumForm
+          buttonText='create'
+          onComplete={this.props.createAlbum}/>
+
         {this.props.albums ?
           this.props.albums.map(album =>
             <div key={album._id}>
-              {/* <span onClick={() => this.props.deleteAlbum(album)}>x</span> */}
+              {<span onClick={() => this.props.deleteAlbum(album)}>x</span>}
               <p>{album.name}</p>
+              <AlbumForm album={album} buttonText="update" update={this.props.updateAlbum}/>
             </div>)
           :
           undefined
@@ -35,7 +44,8 @@ let mapStateToProps = state => ({
 let mapDispatchToProps = dispatch => ({
   fetchAlbums: () => dispatch(albumFetchRequest()),
   createAlbum: album => dispatch(albumCreateRequest(album)),
-  // deleteAlbum: album => dispatch(albumDeleteRequest(album)),
+  deleteAlbum: album => dispatch(albumDeleteRequest(album)),
+  updateAlbum: album => dispatch(albumUpdateRequest(album)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
