@@ -25,6 +25,7 @@ export default class AlbumForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     this.props.onComplete(this.state.album);
+    console.log(this.props);
     console.log(this.state);
     console.log(Object.keys);
     Object.keys(this.state.album).map(key => this.setState({[key]: ''}));
